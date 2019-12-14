@@ -91,7 +91,7 @@ class BruteForce(object):
                                            settings.PARAM_FORM_LOGIN_KEY: param_form_login_value}
                         # HTTP POST request
                         self.__response_login = requests.post(self.__url_login, post_parameters, cookies=self.__cookies,
-                                                              allow_redirects=False)
+                                                              allow_redirects=False, timeout=settings.REQUEST_TIMEOUT)
 
                         # check if authentication succeed
                         if settings.URL_SUCCESS in self.__response_login.headers["Location"]:
