@@ -1,8 +1,12 @@
 import argparse
 import sys
+import logging
 
 import settings
 from modules.SqliScanner import SqliScanner
+
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 # This program check if a website is vulnerable to SQL injection (wiki: https://en.wikipedia.org/wiki/SQL_injection)
@@ -20,15 +24,22 @@ def main():
     parser.add_argument("-u", "--url", help="target to scan. (ex: http://localhost:8000/)", required=True)
     parser.add_argument("-s", "--sqlmap-server",
                         help="Sqlmap server API. (default: {default})".format(default=settings.SQLMAP_SERVER))
+    parser.add_argument("-d", "--debug",action='store_true',
+                        help="Get debug output.")
     args = parser.parse_args()
 
+    # print help if no argument is provided
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
 
-    sqlscan = SqliScanner(args.url)
+    # Create SqliScanner object
+    sqlscan = SqliScanner(args.url, args.debug)
+    # Run scan
+    sqlscan.run()
 
 
 # main function of the program
 if __name__ == "__main__":
     main()
+
