@@ -16,8 +16,9 @@ class SqliScanner(object):
         self.__server = server
 
         # Init logger
-        self.__logger = logging.getLogger(__name__)
-        self.__logger.disabled = not self.__debug
+        if self.__debug:
+            self.__logger = logging.getLogger(__name__)
+            self.__logger.disabled = not self.__debug
 
     # get target
     def get_target(self):

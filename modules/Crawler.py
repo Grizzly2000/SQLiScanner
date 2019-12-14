@@ -19,8 +19,9 @@ class Crawler(object):
         self.__urls = []
 
         # Init logger
-        self.__logger = logging.getLogger(__name__)
-        self.__logger.disabled = not debug
+        if self.__debug:
+            self.__logger = logging.getLogger(__name__)
+            self.__logger.disabled = not debug
 
     # Find urls with parameters in form
     def crawl_target_forms(self):
