@@ -5,7 +5,7 @@ import logging
 import settings
 from modules.SqliScanner import SqliScanner
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=settings.DEBUG_LEVEL)
 logger = logging.getLogger(__name__)
 
 
@@ -34,6 +34,10 @@ def main():
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
+
+    # Add slash at the end of thr provided url
+    if '/' not in args.url[-1]:
+        args.url += '/'
 
     # Create SqliScanner object
     sqlscan = SqliScanner(debug=args.debug, target=args.url)
