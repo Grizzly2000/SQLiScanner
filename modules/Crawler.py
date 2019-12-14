@@ -4,12 +4,17 @@ import logging
 
 # Class which crawl URLs website recursively
 # Init paramaters :
-# target : target to scan recursively
 # debug : enable debug mode
+# target : target to scan recursively
+# cookies : specify cookies cookies
 # threshold : crawl to a specific deep
+# urls : list of URL object
+# self.__logger : class logger
 class Crawler(object):
-    def __init__(self, target, debug, threshold=settings.CRAWLER_THRESHOLD):
+    def __init__(self, debug: bool, target: str, cookies: dict = None, threshold: int = settings.CRAWLER_THRESHOLD):
+        self.__debug = debug
         self.__target = target
+        self.__cookies = cookies
         self.__threshold = threshold
         self.__urls = []
 
