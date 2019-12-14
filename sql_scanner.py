@@ -2,6 +2,7 @@ import argparse
 import sys
 
 import settings
+from modules.SqliScanner import SqliScanner
 
 
 # This program check if a website is vulnerable to SQL injection (wiki: https://en.wikipedia.org/wiki/SQL_injection)
@@ -24,6 +25,8 @@ def main():
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
+
+    sqlscan = SqliScanner(args.url)
 
 
 # main function of the program
