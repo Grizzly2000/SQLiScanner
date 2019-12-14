@@ -16,7 +16,7 @@ class Crawler(object):
         self.__logger = logging.getLogger(__name__) # logger
         self.__logger.disabled = not debug
 
-    # Find urls with parameters in form
+    # Find urls form with parameters
     def run(self):
         self.__logger.info("Start crawler for {target}".format(target=self.__target))
 
