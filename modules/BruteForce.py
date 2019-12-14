@@ -19,3 +19,12 @@ class BruteForce(object):
             self.__file_users = file_users
             self.__file_passwords = file_passwords
 
+    def test_login_url(self):
+        try:
+            self.__request_login = requests.get(self.__url_login, timeout=settings.REQUEST_TIMEOUT)
+        except ConnectionRefusedError:
+            print("Error - Login page unreachable !")
+            exit(0)
+
+    def run(self):
+        self.test_login_url()
