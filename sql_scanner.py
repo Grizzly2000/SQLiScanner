@@ -36,7 +36,7 @@ def main():
         sys.exit(1)
 
     # Create SqliScanner object
-    sqlscan = SqliScanner(args.url, args.debug)
+    sqlscan = SqliScanner(debug=args.debug, target=args.url)
     # Run scan
     sqlscan.run()
 
