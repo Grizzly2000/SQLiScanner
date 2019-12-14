@@ -19,12 +19,14 @@ logger = logging.getLogger(__name__)
 # Here is the list of each parameters :
 # --url is a required parameter. The program will crawl this URL to check if form parameters are vulnerable to SQLi.
 # --sqlmap-server is optional. Provide its own sqlmapapi server. (run sqlmap server : sqlmapapi.py -s)
+# --debug is optional. Get debug output.
 def main():
+    # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="target to scan. (ex: http://localhost:8000/)", required=True)
     parser.add_argument("-s", "--sqlmap-server",
                         help="Sqlmap server API. (default: {default})".format(default=settings.SQLMAP_SERVER))
-    parser.add_argument("-d", "--debug",action='store_true',
+    parser.add_argument("-d", "--debug", action='store_true',
                         help="Get debug output.")
     args = parser.parse_args()
 
@@ -42,4 +44,3 @@ def main():
 # main function of the program
 if __name__ == "__main__":
     main()
-
