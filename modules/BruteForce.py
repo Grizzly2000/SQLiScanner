@@ -26,5 +26,19 @@ class BruteForce(object):
             print("Error - Login page unreachable !")
             exit(0)
 
+    def dvwa_set_cookies(self):
+        cookie_session_name = "PHPSESSID"
+        cookie_session_regexp = cookie_session_name + "=(.*?);"
+        cookie_session_value = re.match(cookie_session_regexp, self.__request_login.headers["set-cookie"]).group(1)
+
+        # Set cookies
+        self.__cookies = {cookie_session_name: cookie_session_value,
+                          "security": "low"}
+
+    def dvwa_brute_force(self):
+        pass
+
     def run(self):
         self.test_login_url()
+        self.dvwa_set_cookies()
+        self.dvwa_brute_force()
