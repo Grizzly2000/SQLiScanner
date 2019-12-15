@@ -33,34 +33,36 @@ Then, you need to connect with the following credentials 'admin/password'.
 Go to "http://localhost:8000/setup.php" to click on the button "Create / Reset Database"
 
 ## Examples
-Run Sqlmap scanner in quiet mode on "http://localhost:8000"
+Run Sqlmap scanner on "http://localhost:8000"
 ```
 python sql_scanner.py --url http://localhost:8000
 ```
-
-Run Sqlmap scanner in debug mode on "http://localhost:8000"
+or
 ```
-python sql_scanner.py -u http://localhost:8000 -d
+chmod u+x sql_scanner.py
+./sql_scanner.py --url http://localhost:8000
 ```
-
+Quiet mode is available
+```
+./sql_scanner.py --url http://localhost:8000 -q
+```
 ## Basic Help
 ```
-usage: sql_scanner.py [-h] -u URL [-s SQLMAP_SERVER] [-d]
+./sql_scanner.py --help
+usage: sql_scanner.py [-h] -u URL [-q]
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -u URL, --url URL     target to scan. (ex: http://localhost:8000/)
-  -s SQLMAP_SERVER, --sqlmap-server SQLMAP_SERVER
-                        Sqlmap server API. (default: http://127.0.0.1:8775/)
-  -d, --debug           Get debug output.
+  -h, --help         show this help message and exit
+  -u URL, --url URL  target to scan. (ex: http://localhost:8000/)
+  -q, --quiet        Do not use stdout.
 ```
-
-
 
 ## Settings in settings.py
 
 ```
-# Debug - Set Debug level if option '-d' have been specified : logging.DEBUG = 10 / logging.INFO = 20
+# Debug - Set Debug information
+DEBUG = True
+# Debug - Set Debug level if option has been enabled : logging.DEBUG = 10 / logging.INFO = 20
 DEBUG_LEVEL = 20 
 
 # Sqlmap - server location
@@ -69,6 +71,8 @@ SQLMAP_SERVER = "http://127.0.0.1:8775/"
 SQLTASK_MAX_TIME_ELAPSED = 30
 # Sqlmap - time to spend between each 'status' task request.
 SQLTASK_GET_STATUS_INTERVAL = 5
+# Sqlmap - output directory to write the report in JSON format
+SQLMAP_REPORT_OUTPUT_DIR = "reports/"
 # Sqlmap - output file to write the report in JSON format
 SQLMAP_REPORT_OUTPUT_FILE = "vulns_report.txt"
 
