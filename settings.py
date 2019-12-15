@@ -1,4 +1,6 @@
-# Debug - Set Debug level if option '-d' have been specified : logging.DEBUG = 10 / logging.INFO = 20
+# Debug - Set Debug information
+DEBUG = True
+# Debug - Set Debug level if option has been enabled : logging.DEBUG = 10 / logging.INFO = 20
 DEBUG_LEVEL = 20
 
 # Sqlmap - server location
@@ -7,6 +9,8 @@ SQLMAP_SERVER = "http://127.0.0.1:8775/"
 SQLTASK_MAX_TIME_ELAPSED = 30
 # Sqlmap - time to spend between each 'status' task request.
 SQLTASK_GET_STATUS_INTERVAL = 5
+# Sqlmap - output directory to write the report in JSON format
+SQLMAP_REPORT_OUTPUT_DIR = "reports/"
 # Sqlmap - output file to write the report in JSON format
 SQLMAP_REPORT_OUTPUT_FILE = "vulns_report.txt"
 
