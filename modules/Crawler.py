@@ -10,14 +10,14 @@ from modules.URL import URL
 # Class which crawl URLs website recursively
 class Crawler(object):
     def __init__(self, debug: bool, target: str, cookies: dict = None, threshold: int = settings.CRAWLER_THRESHOLD):
-        self.__debug = debug                         # debug mode
-        self.__target = target                       # target to crawl recursively
-        self.__cookies = cookies                     # cookies to provide
-        self.__threshold = threshold                 # crawl to a specific deep
+        self.__debug = debug  # debug mode
+        self.__target = target  # target to crawl recursively
+        self.__cookies = cookies  # cookies for authentication
+        self.__threshold = threshold  # crawl to a specific deep
 
-        self.__urls_form = []                        # store URLs with form
-        self.__urls_visited = []                     # store visited urls
-        self.__urls_to_visit = [target]              # store urls to crawl like a queue (entry point : target url)
+        self.__urls_form = []  # store URLs with form
+        self.__urls_visited = []  # store visited urls
+        self.__urls_to_visit = [target]  # store urls to crawl like a queue (entry point : target url)
 
         # Init logger
         self.__logger = logging.getLogger(__name__)  # logger
@@ -35,7 +35,7 @@ class Crawler(object):
     def get_next_urls_to_visit(self):
         if len(self.__urls_to_visit) == 1:  # No new urls
             self.__urls_to_visit = []
-        else:                               # New url(s) to crawl
+        else:  # New url(s) to crawl
             self.pop_first_url_to_visit()
 
     # Crawl current URL to find new urls or form.
@@ -69,7 +69,8 @@ class Crawler(object):
             else:
                 html_url_form_action = self.__target + html_tag_form["action"]
             # Create and append new URL objects to __urls_form
-            url_form = URL(self.__debug, html_url_form_action, html_tag_form["method"], parameters)
+            url_form = URL(debug=self.__debug, url=html_url_form_action, cookies=self.__cookies,
+                           method=html_tag_form["method"], parameters=parameters)
             self.__urls_form.append(url_form)
 
         # Search new urls
