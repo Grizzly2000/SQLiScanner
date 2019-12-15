@@ -26,7 +26,7 @@ def main():
     # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="target to scan. (ex: http://localhost:8000/)", required=True)
-    parser.add_argument("-d", "--debug", action='store_true', help="Get debug output.")
+    parser.add_argument("-q", "--quiet", action='store_true', help="Do not use stdout.")
     args = parser.parse_args()
 
     # print help if no argument is provided
@@ -38,8 +38,13 @@ def main():
     if '/' not in args.url[-1]:
         args.url += '/'
 
+    if args.quiet:
+        debug = False
+    else:
+        debug = settings.DEBUG
+
     # Create SqliScanner object
-    SqliScanner(debug=args.debug, target=args.url)
+    SqliScanner(debug=debug, target=args.url)
 
 
 # main function of the program
