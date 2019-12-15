@@ -10,12 +10,13 @@ class URL(object):
         self.__method = method          # HTTP method (GET/POST)
         self.__parameters = parameters  # Form parameters
 
-        self.__result = ""              # result of sqlmapapi
-        self.__is_vulnerable = False    # is vulnerable?
-
     # Get url
     def get_url(self):
         return self.__url
+
+    # Get cookies
+    def get_cookies(self):
+        return self.__cookies
 
     # Get method
     def get_method(self):
@@ -25,10 +26,10 @@ class URL(object):
     def get_parameters(self):
         return self.__parameters
 
-    # Set sqlmap result
-    def set_result(self, result: str):
-        self.__result = result
+    # Get concat parameters
+    def get_concat_parameters(self):
+        concat_params = ""
+        for parameter in self.get_parameters():
+            concat_params += "&" + parameter + "=" + settings.DEFAULT_INPUT_VALUE
+        return concat_params
 
-    # Set is_vulnerable
-    def set_is_vulnerable(self, is_vulnerable: bool):
-        self.__is_vulnerable = is_vulnerable
