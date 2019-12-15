@@ -53,7 +53,7 @@ class SqliScanner(object):
                 sqlitask = SqliTask(self.__debug, url)
                 # If vulnerabilities have been found
                 result = sqlitask.get_result()
-                if result > 0:
+                if len(result) > 0:
                     self.__urls_vuln.append(sqlitask.get_result())
 
             # Write report in file (path location can be changed in 'settings.py')
