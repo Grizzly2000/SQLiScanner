@@ -40,9 +40,7 @@ def main():
         args.url += '/'
 
     # Create SqliScanner object
-    sqlscan = SqliScanner(debug=args.debug, target=args.url)
-    # Run scan
-    sqlscan.run()
+    SqliScanner(debug=args.debug, target=args.url)
 
 
 # main function of the program
