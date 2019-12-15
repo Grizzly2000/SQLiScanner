@@ -23,6 +23,9 @@ class Crawler(object):
         self.__logger = logging.getLogger(__name__)  # logger
         self.__logger.disabled = not debug
 
+        # Run
+        self.run()
+
     # Get first url in current queue
     def get_first_url_to_visit(self):
         return self.__urls_to_visit[0]
@@ -57,24 +60,31 @@ class Crawler(object):
         # Search form
         html_tag_form = bs.find('form')
         if html_tag_form:
-            html_tags_input = html_tag_form.find_all('input')
-            parameters = []
             # Get list of parameters
-            for html_tag_input in html_tags_input:
-                parameters.append(html_tag_input["name"])
+            parameters = []
+            # Get 'name' parameter
+            html_tags_input_name = html_tag_form.find_all('input',{'name':True})
+            for html_tag_input_name in html_tags_input_name:
+                parameters.append(html_tag_input_name["name"])
 
             # Check 'action' in form.
-            if html_tag_form["action"].startswith(self.__target):
-                html_url_form_action = html_tag_form["action"]
+            html_tag_form_action = html_tag_form.find("action")
+            if html_tag_form_action:
+                if html_tag_form["action"].startswith(self.__target):
+                    html_url_form_action = html_tag_form["action"]
+                elif html_tag_form["action"] == "#":
+                    html_url_form_action = url
+                else:
+                    html_url_form_action = self.__target + html_tag_form["action"]
             else:
-                html_url_form_action = self.__target + html_tag_form["action"]
+                html_url_form_action = url
             # Create and append new URL objects to __urls_form
             url_form = URL(debug=self.__debug, url=html_url_form_action, cookies=self.__cookies,
-                           method=html_tag_form["method"], parameters=parameters)
+                           method=html_tag_form["method"].upper(), parameters=parameters)
             self.__urls_form.append(url_form)
 
         # Search new urls
-        html_tags_a = bs.find_all('a')
+        html_tags_a = bs.find_all('a', href=True)
         if html_tags_a:
             for html_tag_a in html_tags_a:
                 html_href = html_tag_a["href"]
@@ -84,7 +94,7 @@ class Crawler(object):
                 # Check new_url format
                 if html_href.startswith(self.__target):
                     new_url = html_href
-                elif html_href.startswith("http") or "../" in html_href:
+                elif html_href.startswith("http") or "../" in html_href or html_href in settings.URLS_WHITELIST:
                     continue
                 else:
                     new_url = self.__target + html_href
