@@ -96,6 +96,10 @@ class Crawler(object):
         # remove the visited url
         self.get_next_urls_to_visit()
 
+    # Get URLs with forms
+    def get_urls_form(self):
+        return self.__urls_form
+
     # Find urls form with parameters
     def run(self):
         self.__logger.info("Start crawler for {target}".format(target=self.__target))
