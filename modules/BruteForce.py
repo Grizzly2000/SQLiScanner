@@ -26,6 +26,9 @@ class BruteForce(object):
         self.__logger = logging.getLogger(__name__)     # logger
         self.__logger.disabled = not self.__debug
 
+        # Run
+        self.run()
+
     # Check if url is reachable
     def test_login_url(self):
         try:
@@ -73,10 +76,10 @@ class BruteForce(object):
         # Load users/passwords then test credentials.
 
         # Load users
-        with open(self.__file_users) as fp_users:
+        with open(self.__file_users, "r") as fp_users:
             for cnt_users, user in enumerate(fp_users):
                 # Load passwords
-                with open(self.__file_passwords) as fp_passwords:
+                with open(self.__file_passwords, "r") as fp_passwords:
                     for cnt_passwords, password in enumerate(fp_passwords):
                         # remove '\n'
                         user = user.strip()
