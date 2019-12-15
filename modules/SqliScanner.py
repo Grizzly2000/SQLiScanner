@@ -1,6 +1,7 @@
 import settings
 import logging
 import json
+from datetime import datetime
 
 from modules.Crawler import Crawler
 from modules.BruteForce import BruteForce
@@ -27,11 +28,15 @@ class SqliScanner(object):
         return self.__target
 
     # Write report to a file in JSON format
-    def write_JSON_report(self):
-        with open(settings.SQLMAP_REPORT_OUTPUT_FILE, "w+") as fp_report:
+    def write_json_report(self):
+        # current timestamp
+        now = datetime.now()
+        timestamp = datetime.timestamp(now)
+
+        filename = settings.SQLMAP_REPORT_OUTPUT_DIR + str(timestamp) + "_" + settings.SQLMAP_REPORT_OUTPUT_FILE
+        with open(filename, "w+") as fp_report:
             for vuln in self.__urls_vuln:
                 fp_report.write(json.dumps(vuln))
-
 
     # run sql injection scan
     # Brute force DVWA authentication
@@ -57,6 +62,6 @@ class SqliScanner(object):
                     self.__urls_vuln.append(sqlitask.get_result())
 
             # Write report in file (path location can be changed in 'settings.py')
-            self.write_JSON_report()
+            self.write_json_report()
 
         self.__logger.info("End scan for {target}".format(target=self.__target))
