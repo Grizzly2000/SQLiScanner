@@ -3,6 +3,26 @@ Small program to find SQL injection vulnerabilities on a specific website.
 
 This program will crawl recursively every forms on the specified target and test each GET/POST parameters.
 
+## Structure of the project
+
+```
+├── modules                                     # Contains classes of the project
+│   ├── BruteForce.py                           # Class to brute force login/password (tested on DVWA)
+│   ├── Crawler.py                              # Class to Crawl URLs website recursively to gather form informations
+│   ├── SqliScanner.py                          # Class to run Sqlmap tasks and write a report in JSON format
+│   ├── SqliTask.py                             # Class to handle Sqlmap tasks
+│   └── URL.py                                  # Class to store informations of potentially vulnerable URL
+├── README.md                                   # This file
+├── reports                                     # Store reports here (according to the 'settings.py' file)
+│   └── 1576389014.339253_vulns_report.txt      # Sample of report with DVWA
+├── requirements.txt                            # List of dependencies
+├── settings.py                                 # Settings of the application
+├── sql_scanner.py                              # Main program to launch SQL injection scan on specific target
+├── TODO                                        # Just in case ...
+└── wordlists                                   # Wordlists directory
+    ├── passwords.txt                           # Contains well-known passwords
+    └── users.txt                               # Contains well-known users
+``` 
 
 ## Installation
 
