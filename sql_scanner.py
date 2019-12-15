@@ -24,10 +24,7 @@ def main():
     # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="target to scan. (ex: http://localhost:8000/)", required=True)
-    parser.add_argument("-s", "--sqlmap-server",
-                        help="Sqlmap server API. (default: {default})".format(default=settings.SQLMAP_SERVER))
-    parser.add_argument("-d", "--debug", action='store_true',
-                        help="Get debug output.")
+    parser.add_argument("-d", "--debug", action='store_true', help="Get debug output.")
     args = parser.parse_args()
 
     # print help if no argument is provided
